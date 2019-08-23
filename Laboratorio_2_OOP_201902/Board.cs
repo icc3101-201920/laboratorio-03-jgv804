@@ -130,19 +130,19 @@ namespace Laboratorio_2_OOP_201902
             }
         }
        
-        public void DestroyCombatCards()
+        public void DestroyCards()
         {
-            this.meleeCards = new List<CombatCard>[DEFAULT_NUMBER_OF_PLAYERS];
-            this.rangeCards = new List<CombatCard>[DEFAULT_NUMBER_OF_PLAYERS];
-            this.longRangeCards = new List<CombatCard>[DEFAULT_NUMBER_OF_PLAYERS];
-        }
-        public void DestroySpecialCards()
-        {
-            this.specialMeleeCards = new SpecialCard[DEFAULT_NUMBER_OF_PLAYERS];
-            this.specialRangeCards = new SpecialCard[DEFAULT_NUMBER_OF_PLAYERS];
-            this.specialLongRangeCards = new SpecialCard[DEFAULT_NUMBER_OF_PLAYERS];
+            List<Card>[] captainCards = new List<Card>[DEFAULT_NUMBER_OF_PLAYERS]
+            {
+                new List <Card >(playerCards[0]["captain"]),
+                new List <Card >(playerCards[1]["captain"])
+            };
+
             this.weatherCards = new List<SpecialCard>();
+            this.playerCards = new Dictionary<string, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
+
         }
+    
         public int[] GetMeleeAttackPoints()
         {
             //Debe sumar todos los puntos de ataque de las cartas melee y retornar los valores por jugador.
