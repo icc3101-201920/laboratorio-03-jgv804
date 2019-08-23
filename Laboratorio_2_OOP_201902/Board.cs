@@ -50,70 +50,86 @@ namespace Laboratorio_2_OOP_201902
 
 
 
-        //Metodos
-        public void AddCombatCard(int playerId, CombatCard combatCard)
+  
+
+        public void AddCard(Card card, int PLayerid =-1, string Bufftype =null)
         {
-            if (combatCard.Type == "melee")
-            {
-                meleeCards[playerId].Add(combatCard);
-            }
-            else if (combatCard.Type == "range")
-            {
-                rangeCards[playerId].Add(combatCard);
-            }
-            else
-            {
-                longRangeCards[playerId].Add(combatCard);
-            }
-            
-        }
-        public void AddSpecialCard(SpecialCard specialCard, int playerId = -1, string buffType = null)
-        {
-            if (specialCard.Type == "captain")
+            if (card.GetType().Name == nameof(CombatCard))
             {
                 if (playerId == 0 || playerId == 1)
                 {
-                    captainCards[playerId] = specialCard;
+                    if (playerCards[playerId].ContainsKey(card.Type))
+                    {
+                        playerCards[playerId][card.Type].Add(card);
+                    }
+
+                    else
+                    {
+                        playerCards[playerId].Add(card.Type, new List<Card>() { card });
+
+                    }
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException();
+                    throw new IndexOutOfRangeException("No player id given");
                 }
-            }
-            else if (specialCard.Type == "weather")
-            {
-                weatherCards.Add(specialCard);
+
+
+
             }
             else
             {
-                if (buffType != null)
+                if (playerId == 0 || playerId == 1)
                 {
-                    if (playerId == 0 || playerId == 1)
+                    if (card.GetType().Name == "captain")
                     {
-                        if (buffType == "melee")
+
+
+
+                        if (PlayerCards[playerid].ContainsKey("captain"))
                         {
-                            specialMeleeCards[playerId] = specialCard;
+                            throw new Exception("captain is already set");
                         }
-                        else if (buffType == "range")
+
+                        else
                         {
-                            specialRangeCards[playerId] = specialCard;
+                            playerCards[playerId].Add(card.Type, new List<Card>() { card });
+                        }
+                    }
+
+                    if (card.GetType().Name == "Buffer")
+                    {
+                        if (PlayerCards[PLayerid].ContainsKey(card.type + card.buffType))
+                        {
+                            throw new Exception("Card is already Buffed");
                         }
                         else
                         {
-                            specialLongRangeCards[playerId] = specialCard;
+                            playerCards[playerId].Add(card.Type+card.buffType, new List<Card>() { card });
                         }
+                    }
+                   
+                    if (card.GetType().Name == "Weather")
+                    {
+                        weatherCards.add(card);
                     }
                     else
                     {
-                        throw new IndexOutOfRangeException();
-                    }   
+                        throw new Exception("the special card selected does not have compatible type");
+                    }
+
+
+
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new IndexOutOfRangeException("No player id given");
+
                 }
+                
             }
         }
+       
         public void DestroyCombatCards()
         {
             this.meleeCards = new List<CombatCard>[DEFAULT_NUMBER_OF_PLAYERS];
