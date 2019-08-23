@@ -140,6 +140,8 @@ namespace Laboratorio_2_OOP_201902
 
             this.weatherCards = new List<SpecialCard>();
             this.playerCards = new Dictionary<string, List<Card>>[DEFAULT_NUMBER_OF_PLAYERS];
+            playerCards[0].Add("captain", captainCards[0]);
+            playerCards[1].Add("captain", captainCards[1]);
 
         }
     
